@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-br" class=""> <!-- A classe 'dark' será adicionada aqui via JS -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,18 +16,23 @@
     <!-- Script de Configuração do Tailwind (para fontes e cores) -->
     <script>
         tailwind.config = {
+            darkMode: 'class', // Habilita o modo escuro baseado em classe
             theme: {
                 extend: {
                     fontFamily: {
                         sans: ['Inter', 'sans-serif'],
                     },
                     colors: {
-                        primary: '#0891b2', // Cor ciano
-                        'primary-hover': '#0e7490',
-                        dark: '#111827',
-                        'dark-secondary': '#1f2937',
-                        light: '#f9fafb',
-                        'light-secondary': '#f3f4f6',
+                        primary: '#06b6d4',
+                        'primary-hover': '#0891b2',
+                        'light-bg': '#f8fafc',
+                        'light-bg-secondary': '#f1f5f9',
+                        'light-text': '#1e293b',
+                        'light-text-secondary': '#475569',
+                        'dark-bg': '#0f172a',
+                        'dark-bg-secondary': '#1e293b',
+                        'dark-text': '#f1f5f9',
+                        'dark-text-secondary': '#94a3b8',
                     }
                 }
             }
@@ -36,130 +41,108 @@
 
     <!-- Estilos Adicionais -->
     <style>
-        /* Adiciona a rolagem suave para todo o site */
-        html {
-            scroll-behavior: smooth;
-        }
-        /* Efeito de destaque animado para os títulos das seções */
+        html { scroll-behavior: smooth; }
         h2::after {
-            content: '';
-            display: block;
-            width: 50px;
-            height: 4px;
-            background: #0891b2; /* Cor primária */
-            margin: 8px auto 0;
-            border-radius: 2px;
+            content: ''; display: block; width: 50px; height: 4px;
+            background: #06b6d4; margin: 8px auto 0; border-radius: 2px;
         }
-        /* Estilo para a transição suave do texto alternado */
-        #alternating-text {
-            transition: opacity 0.5s ease-in-out;
-        }
+        #alternating-text { transition: opacity 0.5s ease-in-out; }
+        .whatsapp-icon { transition: transform 0.3s ease; }
+        .whatsapp-icon:hover { transform: scale(1.1); }
     </style>
 </head>
-<body class="bg-light text-dark font-sans">
+<body class="bg-light-bg text-light-text dark:bg-dark-bg dark:text-dark-text font-sans transition-colors duration-300">
 
     <!-- ========== HEADER ========== -->
-    <header class="bg-white/80 backdrop-blur-md shadow-sm fixed top-0 left-0 right-0 z-50">
+    <header class="bg-light-bg/80 dark:bg-dark-bg/80 backdrop-blur-md shadow-sm fixed top-0 left-0 right-0 z-50">
         <div class="container mx-auto px-4">
             <nav class="flex justify-between items-center py-4">
-                <!-- Logo/Nome -->
-                <a href="#" class="text-2xl font-bold text-dark hover:text-primary transition-colors">Lucas Magalhães</a>
+                <a href="#" class="text-2xl font-bold text-light-text dark:text-dark-text hover:text-primary transition-colors">Lucas Magalhães</a>
                 
-                <!-- Links de Navegação (Desktop) -->
-                <ul class="hidden md:flex items-center space-x-8">
-                    <li><a href="#sobre" class="text-gray-600 hover:text-primary font-medium transition-colors">Sobre</a></li>
-                    <li><a href="#projetos" class="text-gray-600 hover:text-primary font-medium transition-colors">Projetos</a></li>
-                    <li><a href="#contato" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-hover font-medium transition-colors">Contato</a></li>
-                </ul>
-
-                <!-- Botão do Menu Mobile -->
-                <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-gray-600 hover:bg-gray-200">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
-                    </svg>
-                </button>
+                <div class="flex items-center space-x-4">
+                    <ul class="hidden md:flex items-center space-x-8">
+                        <li><a href="#sobre" class="text-light-text-secondary dark:text-dark-text-secondary hover:text-primary font-medium transition-colors">Sobre</a></li>
+                        <li><a href="#projetos" class="text-light-text-secondary dark:text-dark-text-secondary hover:text-primary font-medium transition-colors">Projetos</a></li>
+                        <li><a href="#contato" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-hover font-medium transition-colors">Contato</a></li>
+                    </ul>
+                    
+                    <button id="theme-toggle" class="p-2 rounded-md text-light-text-secondary dark:text-dark-text-secondary hover:bg-light-bg-secondary dark:hover:bg-dark-bg-secondary">
+                        <svg id="theme-toggle-dark-icon" class="hidden h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+                        <svg id="theme-toggle-light-icon" class="hidden h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-.707 8.486a1 1 0 011.414 0l.707.707a1 1 0 01-1.414 1.414l-.707-.707a1 1 0 010-1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                    </button>
+                    
+                    <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-light-text-secondary dark:text-dark-text-secondary hover:bg-light-bg-secondary dark:hover:bg-dark-bg-secondary">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" /></svg>
+                    </button>
+                </div>
             </nav>
         </div>
-        <!-- Menu Mobile (oculto por padrão) -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white">
-            <a href="#sobre" class="block py-2 px-4 text-sm text-gray-600 hover:bg-light-secondary">Sobre</a>
-            <a href="#projetos" class="block py-2 px-4 text-sm text-gray-600 hover:bg-light-secondary">Projetos</a>
-            <a href="#contato" class="block py-2 px-4 text-sm text-gray-600 hover:bg-light-secondary">Contato</a>
+        <div id="mobile-menu" class="hidden md:hidden bg-light-bg dark:bg-dark-bg-secondary">
+            <a href="#sobre" class="block py-2 px-4 text-sm hover:bg-light-bg-secondary dark:hover:bg-dark-bg">Sobre</a>
+            <a href="#projetos" class="block py-2 px-4 text-sm hover:bg-light-bg-secondary dark:hover:bg-dark-bg">Projetos</a>
+            <a href="#contato" class="block py-2 px-4 text-sm hover:bg-light-bg-secondary dark:hover:bg-dark-bg">Contato</a>
         </div>
     </header>
 
-    <!-- ========== MAIN CONTENT ========== -->
     <main class="pt-20">
-
-        <!-- ========== SEÇÃO HERO ========== -->
-        <section id="hero" class="bg-light-secondary py-20 md:py-32">
+        <!-- SEÇÕES DO SITE (HERO, SOBRE, PROJETOS) -->
+        <section id="hero" class="bg-light-bg-secondary dark:bg-dark-bg-secondary py-20 md:py-32">
             <div class="container mx-auto px-4 text-center">
-                <h1 class="text-4xl md:text-6xl font-bold text-dark mb-4">
+                <h1 class="text-4xl md:text-6xl font-bold text-light-text dark:text-dark-text mb-4">
                     Olá, eu sou <span id="alternating-text" class="text-primary">Lucas Magalhães</span>
                 </h1>
-                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">Um apaixonado por tecnologia e soluções criativas.</p>
+                <p class="text-lg md:text-xl text-light-text-secondary dark:text-dark-text-secondary max-w-3xl mx-auto mb-8">Um apaixonado por tecnologia e soluções criativas.</p>
                 <a href="#projetos" class="bg-primary text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-primary-hover transition-transform transform hover:scale-105">
                     Conheça meus projetos
                 </a>
             </div>
         </section>
 
-        <!-- ========== SEÇÃO SOBRE ========== -->
         <section id="sobre" class="py-20">
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl font-bold text-center mb-12">Sobre Mim</h2>
                 <div class="flex flex-col md:flex-row items-center gap-12">
                     <div class="w-48 h-48 md:w-60 md:h-60 flex-shrink-0">
-                        <img src="https://placehold.co/240x240/0891b2/ffffff?text=LM" alt="Foto de Perfil de Lucas Magalhães" class="rounded-full w-full h-full object-cover shadow-lg">
+                        <img src="https://placehold.co/240x240/06b6d4/ffffff?text=LM" alt="Foto de Perfil de Lucas Magalhães" class="rounded-full w-full h-full object-cover shadow-lg">
                     </div>
                     <div class="text-center md:text-left">
-                        <p class="text-gray-700 leading-relaxed">
+                        <p class="text-light-text-secondary dark:text-dark-text-secondary leading-relaxed">
                             Escreva aqui um parágrafo sobre você. Fale sobre sua paixão pela sua área, suas principais habilidades e as tecnologias com as quais você trabalha. Tente ser breve e direto, destacando o que te faz um bom profissional. Pode mencionar alguns anos de experiência ou projetos importantes nos quais trabalhou.
-                        </p>
-                        <p class="text-gray-700 leading-relaxed mt-4">
-                            Aqui você pode adicionar mais um parágrafo, falando sobre seus objetivos de carreira, seus hobbies ou qualquer outra informação que considere relevante.
                         </p>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ========== SEÇÃO PROJETOS ========== -->
-        <section id="projetos" class="bg-light-secondary py-20">
+        <section id="projetos" class="bg-light-bg-secondary dark:bg-dark-bg-secondary py-20">
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl font-bold text-center mb-12">Meus Projetos</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                    
-                    <!-- Card de Projeto 1 -->
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
-                        <img src="https://placehold.co/600x400/334155/f1f5f9?text=Projeto+1" alt="Imagem do Projeto 1" class="w-full h-48 object-cover">
+                    <!-- Cards de Projeto -->
+                     <div class="bg-light-bg dark:bg-dark-bg rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/1e293b/f1f5f9?text=Projeto+1" alt="Imagem do Projeto 1" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="text-xl font-bold mb-2">Nome do Projeto 1</h3>
-                            <p class="text-gray-600 mb-4">Breve descrição do projeto, as tecnologias usadas (ex: React, Node.js) e o objetivo principal.</p>
+                            <p class="text-light-text-secondary dark:text-dark-text-secondary mb-4">Breve descrição do projeto, as tecnologias usadas e o objetivo principal.</p>
                             <a href="#" target="_blank" class="text-primary font-medium hover:underline">Ver Projeto &rarr;</a>
                         </div>
                     </div>
-
-                    <!-- Card de Projeto 2 -->
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
-                        <img src="https://placehold.co/600x400/334155/f1f5f9?text=Projeto+2" alt="Imagem do Projeto 2" class="w-full h-48 object-cover">
+                    <div class="bg-light-bg dark:bg-dark-bg rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/1e293b/f1f5f9?text=Projeto+2" alt="Imagem do Projeto 2" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="text-xl font-bold mb-2">Nome do Projeto 2</h3>
-                            <p class="text-gray-600 mb-4">Breve descrição do projeto, as tecnologias usadas (ex: Figma, Vue.js) e o objetivo principal.</p>
+                            <p class="text-light-text-secondary dark:text-dark-text-secondary mb-4">Breve descrição do projeto, as tecnologias usadas e o objetivo principal.</p>
                             <a href="#" target="_blank" class="text-primary font-medium hover:underline">Ver Projeto &rarr;</a>
                         </div>
                     </div>
-
-                    <!-- Card de Projeto 3 -->
-                    <div class="bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
-                        <img src="https://placehold.co/600x400/334155/f1f5f9?text=Projeto+3" alt="Imagem do Projeto 3" class="w-full h-48 object-cover">
+                    <div class="bg-light-bg dark:bg-dark-bg rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/1e293b/f1f5f9?text=Projeto+3" alt="Imagem do Projeto 3" class="w-full h-48 object-cover">
                         <div class="p-6">
                             <h3 class="text-xl font-bold mb-2">Nome do Projeto 3</h3>
-                            <p class="text-gray-600 mb-4">Breve descrição do projeto, as tecnologias usadas (ex: Python, Django) e o objetivo principal.</p>
+                            <p class="text-light-text-secondary dark:text-dark-text-secondary mb-4">Breve descrição do projeto, as tecnologias usadas e o objetivo principal.</p>
                             <a href="#" target="_blank" class="text-primary font-medium hover:underline">Ver Projeto &rarr;</a>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
@@ -169,22 +152,24 @@
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl font-bold text-center mb-12">Entre em Contato</h2>
                 <div class="max-w-xl mx-auto">
-                    <p class="text-center text-gray-600 mb-8">
-                        Tem uma pergunta ou quer trabalhar comigo? Preencha o formulário abaixo ou me encontre nas redes sociais.
+                    <p class="text-center text-light-text-secondary dark:text-dark-text-secondary mb-8">
+                        Tem uma pergunta ou quer trabalhar comigo? Preencha o formulário abaixo.
                     </p>
-                    <form id="contact-form" class="space-y-4">
-                        <div>
-                            <label for="name" class="sr-only">Nome</label>
-                            <input type="text" id="name" name="name" placeholder="Seu Nome" class="w-full p-3 rounded-md bg-light-secondary border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary" required>
-                        </div>
-                        <div>
-                            <label for="email" class="sr-only">E-mail</label>
-                            <input type="email" id="email" name="email" placeholder="Seu E-mail" class="w-full p-3 rounded-md bg-light-secondary border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary" required>
-                        </div>
-                        <div>
-                            <label for="message" class="sr-only">Mensagem</label>
-                            <textarea name="message" id="message" rows="5" placeholder="Sua Mensagem" class="w-full p-3 rounded-md bg-light-secondary border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary" required></textarea>
-                        </div>
+                    <form id="contact-form" action="https://api.web3forms.com/submit" method="POST" class="space-y-4">
+                        <!-- 
+                          INSTRUÇÕES PARA O FORMULÁRIO:
+                          1. Vá para https://web3forms.com
+                          2. Crie sua chave de acesso (access key) gratuitamente.
+                          3. Substitua "SUA_CHAVE_DE_ACESSO_AQUI" pelo seu código.
+                        -->
+                        <input type="hidden" name="access_key" value="SUA_CHAVE_DE_ACESSO_AQUI">
+                        <input type="hidden" name="subject" value="Novo Contato do Portfólio de Lucas Magalhães">
+                        <input type="hidden" name="from_name" value="Meu Portfólio">
+
+                        <input type="text" name="name" placeholder="Seu Nome" class="w-full p-3 rounded-md bg-light-bg-secondary dark:bg-dark-bg-secondary border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary" required>
+                        <input type="email" name="email" placeholder="Seu E-mail" class="w-full p-3 rounded-md bg-light-bg-secondary dark:bg-dark-bg-secondary border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary" required>
+                        <textarea name="message" rows="5" placeholder="Sua Mensagem" class="w-full p-3 rounded-md bg-light-bg-secondary dark:bg-dark-bg-secondary border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary" required></textarea>
+                        
                         <button type="submit" class="w-full bg-primary text-white p-3 rounded-md font-bold hover:bg-primary-hover transition-colors">
                             Enviar Mensagem
                         </button>
@@ -195,74 +180,120 @@
         </section>
     </main>
 
-    <!-- ========== FOOTER ========== -->
-    <footer class="bg-dark text-white py-8">
+    <footer class="bg-dark-bg-secondary text-white py-8">
         <div class="container mx-auto px-4 text-center">
             <p>&copy; 2025 Lucas Magalhães. Todos os direitos reservados.</p>
             <p class="text-sm text-gray-400 mt-2">Desenvolvido com <span class="text-red-500">&hearts;</span> e Café</p>
         </div>
     </footer>
 
+    <!-- ========== ÍCONE FLUTUANTE DO WHATSAPP ========== -->
+    <!-- Instrução: Substitua 5511999999999 pelo seu número de WhatsApp com código do país e DDD -->
+    <a href="https://wa.me/5511987507339" target="_blank" class="whatsapp-icon fixed bottom-6 right-6 bg-green-500 w-16 h-16 rounded-full flex items-center justify-center shadow-lg z-40">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.487 5.235 3.487 8.413 0 6.557-5.338 11.892-11.894 11.892-1.99 0-3.903-.52-5.586-1.459L.057 24zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01s-.52.074-.792.372c-.272.296-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.626.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/>
+        </svg>
+    </a>
 
     <!-- ========== JAVASCRIPT ========== -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // --- Lógica do Texto Alternado ---
+            // Lógica do Tema, Texto Alternado e Menu Mobile (sem alterações)
+            const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
+            const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+            const themeToggleButton = document.getElementById('theme-toggle');
+            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.classList.add('dark');
+                themeToggleLightIcon.classList.remove('hidden');
+            } else {
+                document.documentElement.classList.remove('dark');
+                themeToggleDarkIcon.classList.remove('hidden');
+            }
+            themeToggleButton.addEventListener('click', function() {
+                themeToggleDarkIcon.classList.toggle('hidden');
+                themeToggleLightIcon.classList.toggle('hidden');
+                if (localStorage.getItem('color-theme')) {
+                    if (localStorage.getItem('color-theme') === 'light') {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('color-theme', 'dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('color-theme', 'light');
+                    }
+                } else {
+                    if (document.documentElement.classList.contains('dark')) {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('color-theme', 'light');
+                    } else {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('color-theme', 'dark');
+                    }
+                }
+            });
             const alternatingTextElement = document.getElementById('alternating-text');
             if (alternatingTextElement) {
                 const textsToAlternate = ['Lucas Magalhães', 'Desenvolvedor', 'Designer'];
                 let currentIndex = 0;
-
                 setInterval(() => {
                     currentIndex = (currentIndex + 1) % textsToAlternate.length;
-                    
-                    // Efeito de fade-out
                     alternatingTextElement.style.opacity = 0;
-                    
                     setTimeout(() => {
-                        // Altera o texto e aplica efeito de fade-in
                         alternatingTextElement.textContent = textsToAlternate[currentIndex];
                         alternatingTextElement.style.opacity = 1;
-                    }, 500); // Meio segundo para a transição
-
-                }, 2500); // Altera a cada 2.5 segundos
+                    }, 500);
+                }, 2500);
             }
-
-            // --- Lógica do Menu Mobile ---
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+            mobileMenu.addEventListener('click', (event) => { if(event.target.tagName === 'A') { mobileMenu.classList.add('hidden'); }});
 
-            mobileMenuButton.addEventListener('click', () => {
-                mobileMenu.classList.toggle('hidden');
-            });
-            
-            // Fecha o menu mobile ao clicar em um link
-            mobileMenu.addEventListener('click', (event) => {
-                if(event.target.tagName === 'A') {
-                   mobileMenu.classList.add('hidden');
-                }
-            });
-
-            // --- Lógica do Formulário de Contato ---
+            // --- NOVA LÓGICA DO FORMULÁRIO DE CONTATO (COM ENVIO REAL) ---
             const contactForm = document.getElementById('contact-form');
             const formMessage = document.getElementById('form-message');
 
             contactForm.addEventListener('submit', function(e) {
-                // Previne o envio real do formulário (para este exemplo)
-                e.preventDefault(); 
+                e.preventDefault(); // Previne o envio padrão para tratar com JavaScript
 
-                // Simula uma mensagem de sucesso
-                const name = document.getElementById('name').value;
-                formMessage.textContent = `Obrigado, ${name}! Sua mensagem foi enviada com sucesso.`;
-                formMessage.style.color = 'green';
+                const formData = new FormData(contactForm);
+                const object = {};
+                formData.forEach((value, key) => {
+                    object[key] = value;
+                });
+                const json = JSON.stringify(object);
 
-                // Limpa o formulário após o "envio"
-                contactForm.reset();
+                formMessage.style.color = 'gray';
+                formMessage.innerHTML = "Enviando, por favor aguarde...";
 
-                // Remove a mensagem após 5 segundos
-                setTimeout(() => {
-                    formMessage.textContent = '';
-                }, 5000);
+                fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: json
+                })
+                .then(async (response) => {
+                    let jsonResponse = await response.json();
+                    if (response.status == 200) {
+                        formMessage.style.color = 'green';
+                        formMessage.innerHTML = jsonResponse.message || "Sua mensagem foi enviada com sucesso!";
+                    } else {
+                        formMessage.style.color = 'red';
+                        formMessage.innerHTML = jsonResponse.message || "Ocorreu um erro ao enviar a mensagem.";
+                    }
+                })
+                .catch(error => {
+                    console.log(error);
+                    formMessage.style.color = 'red';
+                    formMessage.innerHTML = "Algo deu errado! Tente novamente mais tarde.";
+                })
+                .then(function() {
+                    contactForm.reset();
+                    setTimeout(() => {
+                        formMessage.innerHTML = '';
+                    }, 5000);
+                });
             });
         });
     </script>
