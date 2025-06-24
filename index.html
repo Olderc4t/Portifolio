@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucas Magalhães | Portfólio</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Script de Configuração do Tailwind (para fontes e cores) -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#0891b2', // Cor ciano
+                        'primary-hover': '#0e7490',
+                        dark: '#111827',
+                        'dark-secondary': '#1f2937',
+                        light: '#f9fafb',
+                        'light-secondary': '#f3f4f6',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Estilos Adicionais -->
+    <style>
+        /* Adiciona a rolagem suave para todo o site */
+        html {
+            scroll-behavior: smooth;
+        }
+        /* Efeito de destaque animado para os títulos das seções */
+        h2::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 4px;
+            background: #0891b2; /* Cor primária */
+            margin: 8px auto 0;
+            border-radius: 2px;
+        }
+        /* Estilo para a transição suave do texto alternado */
+        #alternating-text {
+            transition: opacity 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="bg-light text-dark font-sans">
+
+    <!-- ========== HEADER ========== -->
+    <header class="bg-white/80 backdrop-blur-md shadow-sm fixed top-0 left-0 right-0 z-50">
+        <div class="container mx-auto px-4">
+            <nav class="flex justify-between items-center py-4">
+                <!-- Logo/Nome -->
+                <a href="#" class="text-2xl font-bold text-dark hover:text-primary transition-colors">Lucas Magalhães</a>
+                
+                <!-- Links de Navegação (Desktop) -->
+                <ul class="hidden md:flex items-center space-x-8">
+                    <li><a href="#sobre" class="text-gray-600 hover:text-primary font-medium transition-colors">Sobre</a></li>
+                    <li><a href="#projetos" class="text-gray-600 hover:text-primary font-medium transition-colors">Projetos</a></li>
+                    <li><a href="#contato" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-hover font-medium transition-colors">Contato</a></li>
+                </ul>
+
+                <!-- Botão do Menu Mobile -->
+                <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-gray-600 hover:bg-gray-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+                    </svg>
+                </button>
+            </nav>
+        </div>
+        <!-- Menu Mobile (oculto por padrão) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white">
+            <a href="#sobre" class="block py-2 px-4 text-sm text-gray-600 hover:bg-light-secondary">Sobre</a>
+            <a href="#projetos" class="block py-2 px-4 text-sm text-gray-600 hover:bg-light-secondary">Projetos</a>
+            <a href="#contato" class="block py-2 px-4 text-sm text-gray-600 hover:bg-light-secondary">Contato</a>
+        </div>
+    </header>
+
+    <!-- ========== MAIN CONTENT ========== -->
+    <main class="pt-20">
+
+        <!-- ========== SEÇÃO HERO ========== -->
+        <section id="hero" class="bg-light-secondary py-20 md:py-32">
+            <div class="container mx-auto px-4 text-center">
+                <h1 class="text-4xl md:text-6xl font-bold text-dark mb-4">
+                    Olá, eu sou <span id="alternating-text" class="text-primary">Lucas Magalhães</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">Um apaixonado por tecnologia e soluções criativas.</p>
+                <a href="#projetos" class="bg-primary text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-primary-hover transition-transform transform hover:scale-105">
+                    Conheça meus projetos
+                </a>
+            </div>
+        </section>
+
+        <!-- ========== SEÇÃO SOBRE ========== -->
+        <section id="sobre" class="py-20">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-12">Sobre Mim</h2>
+                <div class="flex flex-col md:flex-row items-center gap-12">
+                    <div class="w-48 h-48 md:w-60 md:h-60 flex-shrink-0">
+                        <img src="https://placehold.co/240x240/0891b2/ffffff?text=LM" alt="Foto de Perfil de Lucas Magalhães" class="rounded-full w-full h-full object-cover shadow-lg">
+                    </div>
+                    <div class="text-center md:text-left">
+                        <p class="text-gray-700 leading-relaxed">
+                            Escreva aqui um parágrafo sobre você. Fale sobre sua paixão pela sua área, suas principais habilidades e as tecnologias com as quais você trabalha. Tente ser breve e direto, destacando o que te faz um bom profissional. Pode mencionar alguns anos de experiência ou projetos importantes nos quais trabalhou.
+                        </p>
+                        <p class="text-gray-700 leading-relaxed mt-4">
+                            Aqui você pode adicionar mais um parágrafo, falando sobre seus objetivos de carreira, seus hobbies ou qualquer outra informação que considere relevante.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SEÇÃO PROJETOS ========== -->
+        <section id="projetos" class="bg-light-secondary py-20">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-12">Meus Projetos</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    
+                    <!-- Card de Projeto 1 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/334155/f1f5f9?text=Projeto+1" alt="Imagem do Projeto 1" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Nome do Projeto 1</h3>
+                            <p class="text-gray-600 mb-4">Breve descrição do projeto, as tecnologias usadas (ex: React, Node.js) e o objetivo principal.</p>
+                            <a href="#" target="_blank" class="text-primary font-medium hover:underline">Ver Projeto &rarr;</a>
+                        </div>
+                    </div>
+
+                    <!-- Card de Projeto 2 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/334155/f1f5f9?text=Projeto+2" alt="Imagem do Projeto 2" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Nome do Projeto 2</h3>
+                            <p class="text-gray-600 mb-4">Breve descrição do projeto, as tecnologias usadas (ex: Figma, Vue.js) e o objetivo principal.</p>
+                            <a href="#" target="_blank" class="text-primary font-medium hover:underline">Ver Projeto &rarr;</a>
+                        </div>
+                    </div>
+
+                    <!-- Card de Projeto 3 -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300">
+                        <img src="https://placehold.co/600x400/334155/f1f5f9?text=Projeto+3" alt="Imagem do Projeto 3" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">Nome do Projeto 3</h3>
+                            <p class="text-gray-600 mb-4">Breve descrição do projeto, as tecnologias usadas (ex: Python, Django) e o objetivo principal.</p>
+                            <a href="#" target="_blank" class="text-primary font-medium hover:underline">Ver Projeto &rarr;</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== SEÇÃO CONTATO ========== -->
+        <section id="contato" class="py-20">
+            <div class="container mx-auto px-4">
+                <h2 class="text-3xl font-bold text-center mb-12">Entre em Contato</h2>
+                <div class="max-w-xl mx-auto">
+                    <p class="text-center text-gray-600 mb-8">
+                        Tem uma pergunta ou quer trabalhar comigo? Preencha o formulário abaixo ou me encontre nas redes sociais.
+                    </p>
+                    <form id="contact-form" class="space-y-4">
+                        <div>
+                            <label for="name" class="sr-only">Nome</label>
+                            <input type="text" id="name" name="name" placeholder="Seu Nome" class="w-full p-3 rounded-md bg-light-secondary border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary" required>
+                        </div>
+                        <div>
+                            <label for="email" class="sr-only">E-mail</label>
+                            <input type="email" id="email" name="email" placeholder="Seu E-mail" class="w-full p-3 rounded-md bg-light-secondary border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary" required>
+                        </div>
+                        <div>
+                            <label for="message" class="sr-only">Mensagem</label>
+                            <textarea name="message" id="message" rows="5" placeholder="Sua Mensagem" class="w-full p-3 rounded-md bg-light-secondary border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary" required></textarea>
+                        </div>
+                        <button type="submit" class="w-full bg-primary text-white p-3 rounded-md font-bold hover:bg-primary-hover transition-colors">
+                            Enviar Mensagem
+                        </button>
+                    </form>
+                    <div id="form-message" class="mt-4 text-center font-medium"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- ========== FOOTER ========== -->
+    <footer class="bg-dark text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p>&copy; 2025 Lucas Magalhães. Todos os direitos reservados.</p>
+            <p class="text-sm text-gray-400 mt-2">Desenvolvido com <span class="text-red-500">&hearts;</span> e Café</p>
+        </div>
+    </footer>
+
+
+    <!-- ========== JAVASCRIPT ========== -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- Lógica do Texto Alternado ---
+            const alternatingTextElement = document.getElementById('alternating-text');
+            if (alternatingTextElement) {
+                const textsToAlternate = ['Lucas Magalhães', 'Desenvolvedor', 'Designer'];
+                let currentIndex = 0;
+
+                setInterval(() => {
+                    currentIndex = (currentIndex + 1) % textsToAlternate.length;
+                    
+                    // Efeito de fade-out
+                    alternatingTextElement.style.opacity = 0;
+                    
+                    setTimeout(() => {
+                        // Altera o texto e aplica efeito de fade-in
+                        alternatingTextElement.textContent = textsToAlternate[currentIndex];
+                        alternatingTextElement.style.opacity = 1;
+                    }, 500); // Meio segundo para a transição
+
+                }, 2500); // Altera a cada 2.5 segundos
+            }
+
+            // --- Lógica do Menu Mobile ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Fecha o menu mobile ao clicar em um link
+            mobileMenu.addEventListener('click', (event) => {
+                if(event.target.tagName === 'A') {
+                   mobileMenu.classList.add('hidden');
+                }
+            });
+
+            // --- Lógica do Formulário de Contato ---
+            const contactForm = document.getElementById('contact-form');
+            const formMessage = document.getElementById('form-message');
+
+            contactForm.addEventListener('submit', function(e) {
+                // Previne o envio real do formulário (para este exemplo)
+                e.preventDefault(); 
+
+                // Simula uma mensagem de sucesso
+                const name = document.getElementById('name').value;
+                formMessage.textContent = `Obrigado, ${name}! Sua mensagem foi enviada com sucesso.`;
+                formMessage.style.color = 'green';
+
+                // Limpa o formulário após o "envio"
+                contactForm.reset();
+
+                // Remove a mensagem após 5 segundos
+                setTimeout(() => {
+                    formMessage.textContent = '';
+                }, 5000);
+            });
+        });
+    </script>
+</body>
+</html>
