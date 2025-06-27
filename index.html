@@ -65,49 +65,70 @@
             filter: blur(80px);
             z-index: 0;
         }
-
         .blob-1 {
-            width: 400px;
-            height: 400px;
-            top: -150px;
-            left: -150px;
+            width: 400px; height: 400px; top: -150px; left: -150px;
             animation: move 15s infinite alternate;
         }
-        
         .blob-2 {
-            width: 300px;
-            height: 300px;
-            bottom: -100px;
-            right: -100px;
+            width: 300px; height: 300px; bottom: -100px; right: -100px;
             animation: move 12s infinite alternate-reverse;
         }
-        
         @keyframes move {
-            from {
-                transform: translate(0, 0) scale(1);
-            }
-            to {
-                transform: translate(40px, 80px) scale(1.2);
-            }
+            from { transform: translate(0, 0) scale(1); }
+            to { transform: translate(40px, 80px) scale(1.2); }
+        }
+
+        /* Efeito de onda para a transição de tema */
+        #theme-wave-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            transform: scaleY(0); transform-origin: top; z-index: 9999;
+            transition: transform 0.6s cubic-bezier(0.83, 0, 0.17, 1);
+        }
+
+        /* Container para o ícone de transição (lua/sol) */
+        #theme-icon-container {
+            position: fixed; inset: 0; z-index: 10000;
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.4s ease-in-out;
+        }
+        #theme-icon-container.icon-visible {
+            opacity: 1;
+        }
+        #theme-icon-container svg {
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform: scale(0.8);
+        }
+        #theme-icon-container.icon-visible svg {
+            transform: scale(1);
         }
     </style>
 </head>
-<body class="bg-light-bg text-light-text dark:bg-dark-bg dark:text-dark-text font-sans transition-colors duration-500">
+<body class="bg-light-bg text-light-text dark:bg-dark-bg dark:text-dark-text font-sans">
+    
+    <!-- Camada para a animação da onda -->
+    <div id="theme-wave-overlay"></div>
+    
+    <!-- Camada para a animação do ícone -->
+    <div id="theme-icon-container">
+        <svg id="wave-moon-icon" class="hidden h-24 w-24 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
+        <svg id="wave-sun-icon" class="hidden h-24 w-24 text-slate-800" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-.707 8.486a1 1 0 011.414 0l.707.707a1 1 0 01-1.414 1.414l-.707-.707a1 1 0 010-1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+    </div>
 
     <!-- ========== HEADER ========== -->
-    <header class="bg-light-bg/80 dark:bg-dark-bg/80 backdrop-blur-md shadow-sm fixed top-0 left-0 right-0 z-50 transition-colors duration-500">
+    <header class="bg-light-bg/80 dark:bg-dark-bg/80 backdrop-blur-md shadow-sm fixed top-0 left-0 right-0 z-50">
         <div class="container mx-auto px-4">
             <nav class="flex justify-between items-center py-4">
-                <a href="#" class="text-2xl font-bold text-light-text dark:text-dark-text hover:text-primary transition-colors duration-300">Lucas Magalhães</a>
+                <a href="#" class="text-2xl font-bold text-light-text dark:text-dark-text hover:text-primary transition-colors">Lucas Magalhães</a>
                 
                 <div class="flex items-center space-x-4">
                     <ul class="hidden md:flex items-center space-x-8">
-                        <li><a href="#sobre" class="text-light-text-secondary dark:text-dark-text-secondary hover:text-primary font-medium transition-colors duration-300">Sobre</a></li>
-                        <li><a href="#projetos" class="text-light-text-secondary dark:text-dark-text-secondary hover:text-primary font-medium transition-colors duration-300">Projetos</a></li>
-                        <li><a href="#contato" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-hover font-medium transition-colors duration-300">Contato</a></li>
+                        <li><a href="#sobre" class="text-light-text-secondary dark:text-dark-text-secondary hover:text-primary font-medium transition-colors">Sobre</a></li>
+                        <li><a href="#projetos" class="text-light-text-secondary dark:text-dark-text-secondary hover:text-primary font-medium transition-colors">Projetos</a></li>
+                        <li><a href="#contato" class="bg-primary text-white px-4 py-2 rounded-md hover:bg-primary-hover font-medium transition-colors">Contato</a></li>
                     </ul>
                     
-                    <button id="theme-toggle" class="p-2 rounded-md text-light-text-secondary dark:text-dark-text-secondary hover:bg-light-bg-secondary dark:hover:bg-dark-bg-secondary transition-colors duration-300">
+                    <button id="theme-toggle" class="p-2 rounded-md text-light-text-secondary dark:text-dark-text-secondary hover:bg-light-bg-secondary dark:hover:bg-dark-bg-secondary">
                         <svg id="theme-toggle-dark-icon" class="hidden h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path></svg>
                         <svg id="theme-toggle-light-icon" class="hidden h-5 w-5" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm-.707 8.486a1 1 0 011.414 0l.707.707a1 1 0 01-1.414 1.414l-.707-.707a1 1 0 010-1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
                     </button>
@@ -118,35 +139,30 @@
                 </div>
             </nav>
         </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-light-bg dark:bg-dark-bg-secondary transition-colors duration-500">
+        <div id="mobile-menu" class="hidden md:hidden bg-light-bg dark:bg-dark-bg-secondary">
             <a href="#sobre" class="block py-2 px-4 text-sm hover:bg-light-bg-secondary dark:hover:bg-dark-bg">Sobre</a>
             <a href="#projetos" class="block py-2 px-4 text-sm hover:bg-light-bg-secondary dark:hover:bg-dark-bg">Projetos</a>
             <a href="#contato" class="block py-2 px-4 text-sm hover:bg-light-bg-secondary dark:hover:bg-dark-bg">Contato</a>
         </div>
     </header>
 
-    <main class="pt-20 md:pt-0"> <!-- Remove o padding top em telas maiores -->
-        <!-- SEÇÃO HERO ATUALIZADA -->
-        <section id="hero" class="relative min-h-screen flex items-center justify-center bg-light-bg-secondary dark:bg-dark-bg-secondary overflow-hidden transition-colors duration-500">
-            <!-- Efeito de fundo -->
+    <main class="pt-20 md:pt-0">
+        <section id="hero" class="relative min-h-screen flex items-center justify-center bg-light-bg-secondary dark:bg-dark-bg-secondary overflow-hidden">
             <div class="absolute top-0 left-0 w-full h-full">
                 <div class="blob blob-1"></div>
                 <div class="blob blob-2"></div>
             </div>
-            
-            <!-- Conteúdo da Seção Hero -->
             <div class="container mx-auto px-4 text-center relative z-10">
-                <h1 class="text-4xl md:text-6xl font-bold text-light-text dark:text-dark-text mb-4 transition-colors duration-500">
+                <h1 class="text-4xl md:text-6xl font-bold text-light-text dark:text-dark-text mb-4">
                     Olá, eu sou <span id="alternating-text" class="text-primary">Lucas Magalhães</span>
                 </h1>
-                <p class="text-lg md:text-xl text-light-text-secondary dark:text-dark-text-secondary max-w-3xl mx-auto mb-8 transition-colors duration-500">Um apaixonado por tecnologia e soluções criativas.</p>
+                <p class="text-lg md:text-xl text-light-text-secondary dark:text-dark-text-secondary max-w-3xl mx-auto mb-8">Um apaixonado por tecnologia e soluções criativas.</p>
                 <a href="#projetos" class="bg-primary text-white px-8 py-3 rounded-full font-bold text-lg hover:bg-primary-hover transition-transform transform hover:scale-105">
                     Conheça meus projetos
                 </a>
             </div>
         </section>
 
-        <!-- OUTRAS SEÇÕES (SOBRE, PROJETOS, CONTATO) -->
         <section id="sobre" class="py-20 overflow-hidden">
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl font-bold text-center mb-12" data-aos="fade-up">Sobre Mim</h2>
@@ -155,7 +171,7 @@
                         <img src="https://placehold.co/240x240/06b6d4/ffffff?text=LM" alt="Foto de Perfil de Lucas Magalhães" class="rounded-full w-full h-full object-cover shadow-lg" loading="lazy">
                     </div>
                     <div class="text-center md:text-left" data-aos="fade-left">
-                        <p class="text-light-text-secondary dark:text-dark-text-secondary leading-relaxed transition-colors duration-500">
+                        <p class="text-light-text-secondary dark:text-dark-text-secondary leading-relaxed">
                             Escreva aqui um parágrafo sobre você. Fale sobre sua paixão pela sua área, suas principais habilidades e as tecnologias com as quais você trabalha. Tente ser breve e direto, destacando o que te faz um bom profissional. Pode mencionar alguns anos de experiência ou projetos importantes nos quais trabalhou.
                         </p>
                     </div>
@@ -163,31 +179,31 @@
             </div>
         </section>
 
-        <section id="projetos" class="bg-light-bg-secondary dark:bg-dark-bg-secondary py-20 overflow-hidden transition-colors duration-500">
+        <section id="projetos" class="bg-light-bg-secondary dark:bg-dark-bg-secondary py-20 overflow-hidden">
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl font-bold text-center mb-12" data-aos="fade-up">Meus Projetos</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                     <div class="bg-light-bg dark:bg-dark-bg rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300" data-aos="fade-up" data-aos-delay="0">
+                     <div class="bg-light-bg dark:bg-dark-bg rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform" data-aos="fade-up" data-aos-delay="0">
                         <img src="https://placehold.co/600x400/1e293b/f1f5f9?text=Projeto+1" alt="Imagem do Projeto 1" class="w-full h-48 object-cover" loading="lazy">
-                        <div class="p-6 transition-colors duration-500">
+                        <div class="p-6">
                             <h3 class="text-xl font-bold mb-2">Nome do Projeto 1</h3>
-                            <p class="text-light-text-secondary dark:text-dark-text-secondary mb-4 transition-colors duration-500">Breve descrição do projeto, as tecnologias usadas e o objetivo principal.</p>
+                            <p class="text-light-text-secondary dark:text-dark-text-secondary mb-4">Breve descrição do projeto, as tecnologias usadas e o objetivo principal.</p>
                             <a href="#" target="_blank" class="text-primary font-medium hover:underline">Ver Projeto &rarr;</a>
                         </div>
                     </div>
-                    <div class="bg-light-bg dark:bg-dark-bg rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300" data-aos="fade-up" data-aos-delay="200">
+                    <div class="bg-light-bg dark:bg-dark-bg rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform" data-aos="fade-up" data-aos-delay="200">
                         <img src="https://placehold.co/600x400/1e293b/f1f5f9?text=Projeto+2" alt="Imagem do Projeto 2" class="w-full h-48 object-cover" loading="lazy">
-                        <div class="p-6 transition-colors duration-500">
+                        <div class="p-6">
                             <h3 class="text-xl font-bold mb-2">Nome do Projeto 2</h3>
-                            <p class="text-light-text-secondary dark:text-dark-text-secondary mb-4 transition-colors duration-500">Breve descrição do projeto, as tecnologias usadas e o objetivo principal.</p>
+                            <p class="text-light-text-secondary dark:text-dark-text-secondary mb-4">Breve descrição do projeto, as tecnologias usadas e o objetivo principal.</p>
                             <a href="#" target="_blank" class="text-primary font-medium hover:underline">Ver Projeto &rarr;</a>
                         </div>
                     </div>
-                    <div class="bg-light-bg dark:bg-dark-bg rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform duration-300" data-aos="fade-up" data-aos-delay="400">
+                    <div class="bg-light-bg dark:bg-dark-bg rounded-lg shadow-md overflow-hidden transform hover:-translate-y-2 transition-transform" data-aos="fade-up" data-aos-delay="400">
                         <img src="https://placehold.co/600x400/1e293b/f1f5f9?text=Projeto+3" alt="Imagem do Projeto 3" class="w-full h-48 object-cover" loading="lazy">
-                        <div class="p-6 transition-colors duration-500">
+                        <div class="p-6">
                             <h3 class="text-xl font-bold mb-2">Nome do Projeto 3</h3>
-                            <p class="text-light-text-secondary dark:text-dark-text-secondary mb-4 transition-colors duration-500">Breve descrição do projeto, as tecnologias usadas e o objetivo principal.</p>
+                            <p class="text-light-text-secondary dark:text-dark-text-secondary mb-4">Breve descrição do projeto, as tecnologias usadas e o objetivo principal.</p>
                             <a href="#" target="_blank" class="text-primary font-medium hover:underline">Ver Projeto &rarr;</a>
                         </div>
                     </div>
@@ -199,16 +215,16 @@
             <div class="container mx-auto px-4">
                 <h2 class="text-3xl font-bold text-center mb-12" data-aos="fade-up">Entre em Contato</h2>
                 <div class="max-w-xl mx-auto" data-aos="zoom-in">
-                    <p class="text-center text-light-text-secondary dark:text-dark-text-secondary mb-8 transition-colors duration-500">
+                    <p class="text-center text-light-text-secondary dark:text-dark-text-secondary mb-8">
                         Tem uma pergunta ou quer trabalhar comigo? Preencha o formulário abaixo.
                     </p>
                     <form id="contact-form" action="https://api.web3forms.com/submit" method="POST" class="space-y-4">
                         <input type="hidden" name="access_key" value="SUA_CHAVE_DE_ACESSO_AQUI">
                         <input type="hidden" name="subject" value="Novo Contato do Portfólio de Lucas Magalhães">
                         <input type="hidden" name="from_name" value="Meu Portfólio">
-                        <input type="text" name="name" placeholder="Seu Nome" class="w-full p-3 rounded-md bg-light-bg-secondary dark:bg-dark-bg-secondary border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-500" required>
-                        <input type="email" name="email" placeholder="Seu E-mail" class="w-full p-3 rounded-md bg-light-bg-secondary dark:bg-dark-bg-secondary border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-500" required>
-                        <textarea name="message" rows="5" placeholder="Sua Mensagem" class="w-full p-3 rounded-md bg-light-bg-secondary dark:bg-dark-bg-secondary border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary transition-colors duration-500" required></textarea>
+                        <input type="text" name="name" placeholder="Seu Nome" class="w-full p-3 rounded-md bg-light-bg-secondary dark:bg-dark-bg-secondary border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary" required>
+                        <input type="email" name="email" placeholder="Seu E-mail" class="w-full p-3 rounded-md bg-light-bg-secondary dark:bg-dark-bg-secondary border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary" required>
+                        <textarea name="message" rows="5" placeholder="Sua Mensagem" class="w-full p-3 rounded-md bg-light-bg-secondary dark:bg-dark-bg-secondary border border-gray-300 dark:border-gray-600 focus:outline-none focus:ring-2 focus:ring-primary" required></textarea>
                         <button type="submit" class="w-full bg-primary text-white p-3 rounded-md font-bold hover:bg-primary-hover transition-colors">
                             Enviar Mensagem
                         </button>
@@ -243,38 +259,64 @@
                 once: true,
             });
 
-            // Lógica do Tema, Texto Alternado e Menu Mobile (sem alterações)
+            // Lógica do Tema Claro/Escuro com Efeito de Onda e Ícone
+            const themeToggleButton = document.getElementById('theme-toggle');
             const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
             const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
-            const themeToggleButton = document.getElementById('theme-toggle');
+            const waveOverlay = document.getElementById('theme-wave-overlay');
+            const themeIconContainer = document.getElementById('theme-icon-container');
+            const waveMoonIcon = document.getElementById('wave-moon-icon');
+            const waveSunIcon = document.getElementById('wave-sun-icon');
+            let isAnimatingTheme = false;
+
+            // Aplica tema inicial
             if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
                 themeToggleLightIcon.classList.remove('hidden');
+                document.documentElement.classList.add('dark');
             } else {
-                document.documentElement.classList.remove('dark');
                 themeToggleDarkIcon.classList.remove('hidden');
+                document.documentElement.classList.remove('dark');
             }
+
             themeToggleButton.addEventListener('click', function() {
-                themeToggleDarkIcon.classList.toggle('hidden');
-                themeToggleLightIcon.classList.toggle('hidden');
-                if (localStorage.getItem('color-theme')) {
-                    if (localStorage.getItem('color-theme') === 'light') {
-                        document.documentElement.classList.add('dark');
-                        localStorage.setItem('color-theme', 'dark');
-                    } else {
-                        document.documentElement.classList.remove('dark');
-                        localStorage.setItem('color-theme', 'light');
-                    }
+                if (isAnimatingTheme) return;
+                isAnimatingTheme = true;
+
+                const isSwitchingToDark = !document.documentElement.classList.contains('dark');
+                
+                // 1. Prepara a onda e o ícone
+                waveOverlay.style.backgroundColor = isSwitchingToDark ? '#0f172a' : '#f8fafc';
+                if (isSwitchingToDark) {
+                    waveMoonIcon.classList.remove('hidden');
                 } else {
-                    if (document.documentElement.classList.contains('dark')) {
-                        document.documentElement.classList.remove('dark');
-                        localStorage.setItem('color-theme', 'light');
-                    } else {
-                        document.documentElement.classList.add('dark');
-                        localStorage.setItem('color-theme', 'dark');
-                    }
+                    waveSunIcon.classList.remove('hidden');
                 }
+                
+                // 2. Inicia a animação de entrada
+                waveOverlay.style.transform = 'scaleY(1)';
+                themeIconContainer.classList.add('icon-visible');
+
+                setTimeout(() => {
+                    // 3. Troca o tema e inicia a animação de saída
+                    document.documentElement.classList.toggle('dark');
+                    localStorage.setItem('color-theme', isSwitchingToDark ? 'dark' : 'light');
+                    themeToggleDarkIcon.classList.toggle('hidden');
+                    themeToggleLightIcon.classList.toggle('hidden');
+                    
+                    waveOverlay.style.transform = 'scaleY(0)';
+                    themeIconContainer.classList.remove('icon-visible');
+
+                }, 600); 
+
+                // 4. Limpa e reseta os ícones após a animação
+                setTimeout(() => {
+                    waveMoonIcon.classList.add('hidden');
+                    waveSunIcon.classList.add('hidden');
+                    isAnimatingTheme = false;
+                }, 1200); 
             });
+
+            // Lógica do Texto Alternado
             const alternatingTextElement = document.getElementById('alternating-text');
             if (alternatingTextElement) {
                 const textsToAlternate = ['Lucas Magalhães', 'Desenvolvedor', 'Designer'];
@@ -288,11 +330,14 @@
                     }, 500);
                 }, 2500);
             }
+            
+            // Lógica do Menu Mobile
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             mobileMenuButton.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
             mobileMenu.addEventListener('click', (event) => { if(event.target.tagName === 'A') { mobileMenu.classList.add('hidden'); }});
 
+            // Lógica do Formulário de Contato
             const contactForm = document.getElementById('contact-form');
             const formMessage = document.getElementById('form-message');
             contactForm.addEventListener('submit', function(e) {
