@@ -1,0 +1,87 @@
+/* Estilos Adicionais */
+html { scroll-behavior: smooth; }
+h2::after {
+    content: ''; 
+    display: block; 
+    width: 50px; 
+    height: 4px;
+    background: #06b6d4; 
+    margin: 8px auto 0; 
+    border-radius: 2px;
+}
+#alternating-text { 
+    transition: opacity 0.5s ease-in-out; 
+}
+.whatsapp-icon { 
+    transition: transform 0.3s ease; 
+}
+.whatsapp-icon:hover { 
+    transform: scale(1.1); 
+}
+[data-aos] {
+    opacity: 0;
+    transition-property: opacity, transform;
+}
+
+/* Animação para o fundo da seção Hero */
+.blob {
+    position: absolute;
+    background: linear-gradient(180deg, rgba(6, 182, 212, 0.4) 0%, rgba(8, 145, 178, 0.3) 100%);
+    border-radius: 50%;
+    filter: blur(80px);
+    z-index: 0;
+}
+.blob-1 {
+    width: 400px; 
+    height: 400px; 
+    top: -150px; 
+    left: -150px;
+    animation: move 15s infinite alternate;
+}
+.blob-2 {
+    width: 300px; 
+    height: 300px; 
+    bottom: -100px; 
+    right: -100px;
+    animation: move 12s infinite alternate-reverse;
+}
+@keyframes move {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(40px, 80px) scale(1.2); }
+}
+
+/* Efeito de onda para a transição de tema */
+#theme-wave-overlay {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100vw; 
+    height: 100vh;
+    transform: scaleY(0); 
+    transform-origin: top; 
+    z-index: 9999;
+    transition: transform 0.6s cubic-bezier(0.83, 0, 0.17, 1);
+}
+
+/* Container para o ícone de transição (lua/sol) */
+#theme-icon-container {
+    position: fixed; 
+    inset: 0; 
+    z-index: 10000;
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    opacity: 0; 
+    pointer-events: none;
+    transition: opacity 0.4s ease-in-out;
+}
+#theme-icon-container.icon-visible {
+    opacity: 1;
+}
+#theme-icon-container svg {
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    transform: scale(0.8);
+}
+#theme-icon-container.icon-visible svg {
+    transform: scale(1);
+}
